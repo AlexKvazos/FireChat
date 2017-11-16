@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A337200437737EE97095EBF /* Pods_FireChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500ED4561781A0FB74D33AED /* Pods_FireChat.framework */; };
+		FA09B0C81FBD44570024A6EB /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA09B0C71FBD44570024A6EB /* UIImageView.swift */; };
 		FA152BE91FB38C8100F368D4 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA152BE81FB38C8100F368D4 /* LoginController.swift */; };
 		FA152BEC1FB38D0D00F368D4 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA152BEB1FB38D0D00F368D4 /* UIColor.swift */; };
 		FA152BF31FB409E000F368D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA152BF21FB409E000F368D4 /* GoogleService-Info.plist */; };
@@ -23,6 +24,7 @@
 		3CE94A4C8BDD7E025A7C6B97 /* Pods-FireChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireChat.release.xcconfig"; path = "Pods/Target Support Files/Pods-FireChat/Pods-FireChat.release.xcconfig"; sourceTree = "<group>"; };
 		500ED4561781A0FB74D33AED /* Pods_FireChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FireChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2B419EC87CE76674355FD71 /* Pods-FireChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FireChat/Pods-FireChat.debug.xcconfig"; sourceTree = "<group>"; };
+		FA09B0C71FBD44570024A6EB /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		FA152BE81FB38C8100F368D4 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		FA152BEB1FB38D0D00F368D4 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		FA152BF21FB409E000F368D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				FA152BEB1FB38D0D00F368D4 /* UIColor.swift */,
+				FA09B0C71FBD44570024A6EB /* UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			files = (
 				FADCF9891FB381B10071E4E9 /* MessagesController.swift in Sources */,
 				FAF005DF1FB428C600E1E5DF /* NewMessageController.swift in Sources */,
+				FA09B0C81FBD44570024A6EB /* UIImageView.swift in Sources */,
 				FAF005E21FB42D3F00E1E5DF /* User.swift in Sources */,
 				FA152BEC1FB38D0D00F368D4 /* UIColor.swift in Sources */,
 				FA152BE91FB38C8100F368D4 /* LoginController.swift in Sources */,

@@ -9,8 +9,10 @@
 import UIKit
 import Firebase
 
-class LoginController: UIViewController {
+class LoginController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    var messagesController: MessagesController?
+    
     var inputsContainerView: UIView?
     var loginRegisterButton: UIButton?
     var nameTextField: UITextField?
@@ -139,6 +141,7 @@ class LoginController: UIViewController {
                 return
             }
             
+            self.messagesController?.updateNavbarTitle()
             self.dismiss(animated: true, completion: nil)
         }
     }
@@ -163,15 +166,33 @@ class LoginController: UIViewController {
                 return
             }
             
-            // Successfully authenticated user
-            let ref = Database.database().reference().child("users").child(uid)
-            ref.updateChildValues(["name": name, "email": email]) { (error, ref) in
-                if error != nil {
-                    print(error!)
-                    return
+            let uuid = NSUUID().uuidString
+            
+            let storageRef = Storage.storage().reference().child("profile_images").child("\(uuid).png")
+            if let uploadData = UIImageJPEGRepresentation((self.logoImageView?.image!)!, 0.1) {
+                storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    
+                    // Successfully authenticated user
+                    let ref = Database.database().reference().child("users").child(uid)
+                    
+                    if let profileImageUrl = metadata?.downloadURL()?.absoluteString {
+                        let data = ["name": name, "email": email, "profileImageUrl": profileImageUrl] as [String : Any]
+                        ref.updateChildValues(data) { (error, ref) in
+                            if error != nil {
+                                print(error!)
+                                return
+                            }
+                            
+                            self.messagesController?.updateNavbarTitle()
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                    
                 }
-                
-                self.dismiss(animated: true, completion: nil)
             }
             
         }
@@ -256,11 +277,36 @@ class LoginController: UIViewController {
         passwordTextField = tf
     }
     
+    @objc func handleSelectProfileImage() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        self.present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            logoImageView?.image = originalImage
+        } else if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            logoImageView?.image = editedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("Cancelled picker")
+        dismiss(animated: true, completion: nil)
+    }
+    
     func setupImageView() {
         let img = UIImageView()
         img.image = UIImage(named: "logo")
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleAspectFit
+        img.isUserInteractionEnabled = true
+        
+        img.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImage)))
+        
         self.view.addSubview(img)
         
         img.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true

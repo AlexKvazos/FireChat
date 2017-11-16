@@ -7,7 +7,8 @@ target 'FireChat' do
 
   # Pods for FireChat
   pod 'Firebase/Core'
-  pod 'Firebase/Database'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'Firebase/Storage'
 
 end

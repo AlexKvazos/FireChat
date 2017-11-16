@@ -31,6 +31,7 @@ class NewMessageController: UITableViewController {
                 let user = User()
                 user.name = dictionary["name"] as? String
                 user.email = dictionary["email"] as? String
+                user.profileImageUrl = dictionary["profileImageUrl"] as? String
                 self.users.append(user)
                 self.tableView.reloadData()
             }
@@ -45,23 +46,66 @@ class NewMessageController: UITableViewController {
         return users.count
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId") as? UserCell
     
         let user = users[indexPath.row]
         cell?.textLabel?.text = user.name
-        cell?.textLabel?.textColor = UIColor.white
         cell?.detailTextLabel?.text = user.email
-        cell?.detailTextLabel?.textColor = UIColor.gray
-        cell?.backgroundColor = UIColor.clear
+        
+        if let profileImagUrl = user.profileImageUrl {
+            cell?.profileImageView.loadImageUsingCache(with: profileImagUrl)
+        }
+        
         return cell!
     }
 }
 
 class UserCell: UITableViewCell {
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        textLabel?.frame = CGRect(
+            x: 64,
+            y: textLabel!.frame.origin.y - 2,
+            width: textLabel!.frame.width,
+            height: textLabel!.frame.height)
+        
+        detailTextLabel?.frame = CGRect(
+            x: 64,
+            y: detailTextLabel!.frame.origin.y + 2,
+            width: detailTextLabel!.frame.width,
+            height: detailTextLabel!.frame.height)
+    }
+    
+    let profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 20
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.layer.backgroundColor = UIColor.gray.cgColor
+        return imageView;
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        self.addSubview(profileImageView)
+        
+        self.textLabel?.textColor = UIColor.white
+        self.detailTextLabel?.textColor = UIColor.gray
+        self.backgroundColor = UIColor.clear
+        
+        // x,y,width,height
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     required init?(coder aDecorer: NSCoder) {

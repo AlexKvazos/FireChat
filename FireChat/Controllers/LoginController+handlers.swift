@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  LoginController+handlers.swift
 //  FireChat
 //
 //  Created by Alejandro Cavazos on 11/9/17.
@@ -7,9 +7,3 @@
 //
 
 import Foundation
-
-class User {
-    var email: String?
-    var name: String?
-    var profileImageUrl: String?
-}
